@@ -1,6 +1,6 @@
 # Month 2 Week 5 DevOps Assignment - Core Banking Infrastructure as Code
 
-Welcome to the Month 2 Week 5 Assignment! This is a hands-on project focused on Infrastructure as Code (IaC) using Terraform and Ansible. Buckle up, because we're about to dive deep into the world of automated infrastructure management!.This is a mini 😭 not-so-mini project where we harness the power of AWS to set up a Virtual Private Cloud (VPC) and deploy a Node.js application. Buckle up, because we're diving into the world of cloud infrastructure, automation, and deployment!
+Welcome to the Month 2 Week 5 Assignment! This is a hands-on project focused on Infrastructure as Code (IaC) using Terraform and Ansible. This is a mini 😭 not-so-mini project where we harness the power of AWS to set up a Virtual Private Cloud (VPC) and deploy a Node.js application. Buckle up, because we're diving into the world of cloud infrastructure, automation, and deployment!
 
 ## Project Overview
 
