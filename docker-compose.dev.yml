@@ -1,0 +1,55 @@
+services:
+  api:
+    build:
+      context: .
+      target: development
+    container_name: corebank-api-dev
+    volumes:
+      - ./app:/usr/src/app
+      - /usr/src/app/node_modules
+    env_file: .env.development
+    networks:
+      - corebank-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:3000/health",
+        ]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  redis:
+    image: redis:alpine
+    container_name: corebank-redis-dev
+    networks:
+      - corebank-network
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  nginx:
+    build:
+      context: .
+      target: nginx-dev
+    container_name: corebank-nginx-dev
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - api
+    networks:
+      - corebank-network
+
+networks:
+  corebank-network:
+    name: corebank-network-dev

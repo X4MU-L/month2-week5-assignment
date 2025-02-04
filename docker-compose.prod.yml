@@ -1,0 +1,46 @@
+services:
+  api:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+      target: production
+    container_name: corebank-api-prod
+    env_file: .env.production
+    networks:
+      - corebank-network
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "wget",
+          "--no-verbose",
+          "--tries=1",
+          "--spider",
+          "http://localhost:3000/health",
+        ]
+      interval: 30s
+      timeout: 3s
+      retries: 3
+
+  nginx:
+    build:
+      context: ./app
+      dockerfile: Dockerfile
+      target: nginx-prod
+    container_name: corebank-nginx-prod
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - nginx-ssl-certs:/etc/nginx/ssl
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - api
+    networks:
+      - corebank-network
+networks:
+  corebank-network:
+    name: corebank-network-prod
+volumes:
+  nginx-ssl-certs:
+    driver: local

@@ -1,0 +1,9 @@
+.env.*
+*.log
+**/.terraform
+**/.terraform.lock.hcl
+**.tfstate
+**/core-banking-key.pem
+**/node_modules
+node_modules
+.vscode
