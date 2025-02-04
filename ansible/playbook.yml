@@ -1,0 +1,9 @@
+- name: Provision and deploy CoreBank app
+  hosts: aws_ec2
+  become: true
+  gather_facts: true
+  remote_user: ubuntu
+
+  roles:
+    - docker
+    - app_deploy

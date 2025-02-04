@@ -1,0 +1,46 @@
+- name: Copy app files
+  ansible.builtin.copy:
+    src: ../../../../app
+    dest: /opt/corebank-app/
+    owner: ubuntu
+    group: ubuntu
+    mode: "0755"
+
+- name: Copy Docker Compose file
+  ansible.builtin.copy:
+    src: ../../../../docker-compose.prod.yml
+    dest: /opt/corebank-app/docker-compose.yml
+    owner: ubuntu
+    group: ubuntu
+    mode: "0644"
+
+- name: Copy Nginx Config file
+  ansible.builtin.copy:
+    src: ../../../../nginx.prod.conf
+    dest: /opt/corebank-app/app/nginx.prod.conf
+    owner: ubuntu
+    group: ubuntu
+    mode: "0644"
+
+- name: Display ElastiCache Info
+  ansible.builtin.debug:
+    msg: "Endpoint: {{ elasticache_endpoint.value }}, Port: {{ elasticache_port.value }}"
+
+- name: Create .env file
+  ansible.builtin.copy:
+    dest: /opt/corebank-app/.env.production
+    content: |
+      NODE_ENV=production
+      PORT=3000
+      SESSION_SECRET=dev-secret-key-change-in-production
+      REDIS_PASSWORD=mypassword
+      ELASTICACHE_ENDPOINT={{ elasticache_endpoint.value }}
+      ELASTICACHE_PORT={{ elasticache_port.value }}
+      DEBUG=true
+    mode: "0644"
+
+- name: Deploy the application using Docker Compose
+  community.docker.docker_compose_v2:
+    project_src: /opt/corebank-app
+    build: always
+    state: present
