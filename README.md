@@ -127,4 +127,7 @@ Before running this project, ensure you have the following prerequisites:
 
 And that's it! Watch as your infrastructure gets created and configured automatically.
 
+You can see the health check of the instances
+
+![Health Check](./PHOTO-2025-02-04-22-51-22.jpg)
 Happy coding!
