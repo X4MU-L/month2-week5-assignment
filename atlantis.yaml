@@ -1,0 +1,8 @@
+version: 3
+automerge: true
+delete_source_branch_on_merge: true
+branch: /main/
+projects:
+- dir: terraform
+  apply_requirements: [mergeable]
+  import_requirements: [approved]
